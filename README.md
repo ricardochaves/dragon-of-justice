@@ -21,7 +21,7 @@ Crie um arquivo ```.env``` baseado no ```example.env```
 cp example.env .env
 ```
 
-Você precisa criar um bot no Telegram e adicionar o token no seu arquivo ```.env```. Para criar um token você pode ver a documentação oficial do Telegran.
+Você precisa criar um bot no Telegram e adicionar o token no seu arquivo ```.env```. Para criar um token você pode ver a [documentação oficial do Telegran](https://core.telegram.org/bots#3-how-do-i-create-a-bot).
 
 Para usar o docker, você precisa criar um diretório ```./data/db``` para mapear o volume do MongoDB ou apenas retire o volume do ```docker-compose.yml```
 
