@@ -1,0 +1,17 @@
+version: "3.5"
+services:
+  mongodb:
+    image: mongo:3.6.0
+    ports: 
+      - "27017:27017"
+    volumes:
+      - ./data/db:/data/db
+  bot:
+    build: .
+    volumes:
+     - .:/bot
+    depends_on:
+     - mongodb
+    env_file: .env
+    command:
+      ["./wait-for-it.sh", "mongodb:27017", "-t", "30", "--", "python", "start_bot.py"]
