@@ -8,7 +8,7 @@ class Messenger:
     def __init__(self):
         pass
 
-    def create_item_message(data):
+    def create_item_message(self, data):
         logging.info('create_item_message data: %s', data)
 
         item = {
@@ -31,7 +31,7 @@ class Messenger:
                          data['issue_date'],
                          data['document_id'],
                          data['document_value'],
-                         build_suspicions(data['suspicions']),
+                         self.build_suspicions(data['suspicions']),
                          'https://jarbas.serenata.ai/layers/#/documentId/%s' % data['document_id'],
                          data['receipt']['url'] if data['receipt']['url'] else 'Não cadastrado'
                      )
@@ -39,9 +39,9 @@ class Messenger:
 
         return item
 
-    def build_msg_suspicions(lista):
+    def build_msg_suspicions(self, lista):
         logging.info('build_msg_suspicions lista: %s', lista)
-        itens = [create_item_message(x) for x in lista]
+        itens = [self.create_item_message(x) for x in lista]
 
         if len(lista) > 0:
             core_texto = 'Abaixo dessa mensagem você vai receber uma mensagem para cada ocorrencia do %s' % lista[
@@ -54,7 +54,7 @@ class Messenger:
         }
         return core_message
 
-    def create_item_message(data):
+    def create_item_message(self, data):
         logging.info('create_item_message data: %s', data)
 
         item = {
@@ -77,7 +77,7 @@ class Messenger:
                          data['issue_date'],
                          data['document_id'],
                          data['document_value'],
-                         build_suspicions(data['suspicions']),
+                         self.build_suspicions(data['suspicions']),
                          'https://jarbas.serenata.ai/layers/#/documentId/%s' % data['document_id'],
                          data['receipt']['url'] if data['receipt']['url'] else 'Não cadastrado'
                      )
@@ -85,7 +85,7 @@ class Messenger:
 
         return item
 
-    def build_suspicions(data):
+    def build_suspicions(self, data):
         if 'irregular_companies_classifier' in data.keys():
             return 'Companhia (Fornecedor) irregular. Situação cadastral inválida ou não tem permissão para vender o tipo de produto ou serviço.'
 

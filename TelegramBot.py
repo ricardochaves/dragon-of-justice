@@ -9,15 +9,12 @@ from db import addOne
 from db import removeOne
 from db import getOne
 from db import get_politico_name
-from requests_jarbas import find_names
-from requests_jarbas import find_suspecius
-
 
 class TelegramBot:
 
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
-    def __init__(self, telegram_bot_token, messenger):
+    def __init__(self, telegram_bot_token, messenger, requester):
 
         # TODO - read token from environment variables
 
@@ -25,6 +22,7 @@ class TelegramBot:
         self.__bot = telepot.aio.Bot(self.__token)
         self.__answerer = telepot.aio.helper.Answerer(self.__bot)
         self.messenger = messenger
+        self.requester = requester
 
 
     def get_bot(self):
@@ -62,7 +60,7 @@ class TelegramBot:
             if nome:
                 list_name = '\n\n'.join(
                     ['<strong>%s</strong>.\n -- Para seguir use /seguir_%s\n -- Para fiscalizar use /passado_%s' %
-                     (x[0], x[1], x[1]) for x in find_names(nome)])
+                     (x[0], x[1], x[1]) for x in self.requester.find_names(nome)])
                 resposta = "A pesquisa pelo nome <strong>%s</strong> gerou os seguintes resultados: \n %s" % (
                     nome, list_name)
             else:
@@ -90,8 +88,8 @@ class TelegramBot:
                 resposta = 'Agora você está seguindo %s. Para parar de seguir use /cancelar_%s.\n\nPara ver a lista de todos os deputados seguidos user /lista' % (
                     get_politico_name(texto_list[1]), texto_list[1])
             elif texto_list[0] == '/passado':
-                resposta = build_msg_suspicions(find_suspecius(texto_list[1]))
-                await send_all_suspicions(chat_id, resposta)
+                resposta = self.messenger.build_msg_suspicions(self.requester.find_suspecius(texto_list[1]))
+                await self.send_all_suspicions(chat_id, resposta)
                 ind_pass = True
 
         if not ind_pass:
