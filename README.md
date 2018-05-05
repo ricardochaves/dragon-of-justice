@@ -1,5 +1,7 @@
 # Dragon of Justice
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/e7961a934e4e617f72f6/maintainability)](https://codeclimate.com/github/ricardochaves/dragon-of-justice/maintainability)
+
 # Como funciona
 
 O projeto é apenas um bot do telegram que interage com o [Serenata de Amor](https://serenata.ai/) e armazena algumas coisas do usuário no banco de dados para ajudar na usabilidade.
