@@ -14,4 +14,4 @@ services:
      - mongodb
     env_file: .env
     command:
-      ["./wait-for-it.sh", "mongodb:27017", "-t", "30", "--", "python", "start_bot.py"]
+      ["./wait-for-it.sh", "mongodb:27017", "-t", "30", "--", "python", "telegram_bot.py"]

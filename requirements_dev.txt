@@ -1,2 +1,7 @@
 pylint
 autopep8
+nose
+nose-watch
+coverage
+requests_mock
+coveralls

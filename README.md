@@ -1,5 +1,7 @@
 # Dragon of Justice
 
+[![Build Status](https://travis-ci.org/ricardochaves/dragon-of-justice.svg?branch=master)](https://travis-ci.org/ricardochaves/dragon-of-justice) [![Maintainability](https://api.codeclimate.com/v1/badges/e7961a934e4e617f72f6/maintainability)](https://codeclimate.com/github/ricardochaves/dragon-of-justice/maintainability) [![Coverage Status](https://coveralls.io/repos/github/ricardochaves/dragon-of-justice/badge.svg)](https://coveralls.io/github/ricardochaves/dragon-of-justice) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3f29f0f45f6a404e8b1ae731a90ed03d)](https://www.codacy.com/app/ricardochaves/dragon-of-justice?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ricardochaves/dragon-of-justice&amp;utm_campaign=Badge_Grade) [![Issue Stats](http://issuestats.com/github/ricardochaves/dragon-of-justice/badge/pr)](http://issuestats.com/github/ricardochaves/dragon-of-justice) [![Issue Stats](http://issuestats.com/github/ricardochaves/dragon-of-justice/badge/issue)](http://issuestats.com/github/ricardochaves/dragon-of-justice)
+
 # Como funciona
 
 O projeto é apenas um bot do telegram que interage com o [Serenata de Amor](https://serenata.ai/) e armazena algumas coisas do usuário no banco de dados para ajudar na usabilidade.
