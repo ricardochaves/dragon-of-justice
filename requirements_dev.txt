@@ -1,6 +1,6 @@
 pylint==1.8.4
 autopep8==1.3.5
-nose
+nose==1.3.7
 nose-watch
 coverage
 requests_mock
