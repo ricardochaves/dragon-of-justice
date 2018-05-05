@@ -1,4 +1,4 @@
-pylint
+pylint==1.8.4
 autopep8
 nose
 nose-watch
