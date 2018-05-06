@@ -1,0 +1,13 @@
+language: python
+python:
+  - 3.5
+  - 3.6
+services:
+  - mongodb
+install:
+  - pip install -r requirements.txt
+  - pip install -r requirements_dev.txt
+script:
+  - nosetests --with-coverage --cover-package=.
+after_success:
+  - coveralls

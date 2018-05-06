@@ -1,3 +1,3 @@
-telepot
-pymongo
-requests
+telepot==12.6
+pymongo==3.6.1
+requests==2.18.4
