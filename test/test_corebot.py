@@ -93,7 +93,7 @@ class TestCoreBot(unittest.TestCase):
         corebot.execute_command('/start', 123)
         msg = corebot.execute_command('/nome vicentinho', 123)
 
-        self.assertEqual(msg, self.message.names_list('VICENTINHO', expected_name))
+        self.assertEqual(msg, self.message.names_list('vicentinho', expected_name))
 
     @requests_mock.mock()
     def test_command_history(self, r):
