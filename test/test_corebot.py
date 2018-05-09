@@ -83,7 +83,7 @@ class TestCoreBot(unittest.TestCase):
             Test: Integration: CoreBot: Command /name
         """
 
-        url = '%s?search=%s' % (os.environ.get("JARBAS_HOST"), quote('VICENTINHO'))
+        url = '%s?search=%s' % (os.environ.get("JARBAS_HOST"), quote('vicentinho'))
 
         expected_name = [["VICENTINHO JÚNIOR", 3059]]
 
@@ -91,9 +91,9 @@ class TestCoreBot(unittest.TestCase):
 
         corebot = CoreBot()
         corebot.execute_command('/start', 123)
-        msg = corebot.execute_command('/nome VICENTINHO', 123)
+        msg = corebot.execute_command('/nome vicentinho', 123)
 
-        self.assertEqual(msg, self.message.names_list('VICENTINHO', expected_name))
+        self.assertEqual(msg, self.message.names_list('vicentinho', expected_name))
 
     @requests_mock.mock()
     def test_command_history(self, r):
