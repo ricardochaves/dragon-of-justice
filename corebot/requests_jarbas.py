@@ -21,7 +21,9 @@ class Requester:
 
         response = requests.get(url)
 
-        b = [[x['congressperson_name'], x['applicant_id']] for x in response.json()['results']]
+        b = [[x['congressperson_name'], x['applicant_id']] for x in response.json()['results'] if
+             name.upper() in x['congressperson_name']]
+
         b.sort()
         names = list(b for b, _ in itertools.groupby(b))
         for x in names:

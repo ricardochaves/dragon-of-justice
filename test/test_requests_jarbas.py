@@ -21,14 +21,13 @@ class TestDb(unittest.TestCase):
 
         req = Requester()
 
-        url = '%s?search=%s' % (os.environ.get("JARBAS_HOST"), quote('fulano'))
+        url = '%s?search=%s' % (os.environ.get("JARBAS_HOST"), quote('VICENTINHO'))
 
-        expected_name = [['CELSO MALDANER', 1798], ['FRANCISCO CHAPADINHA', 2916], ['GIACOBO', 1651], [
-            'ROBERTO DE LUCENA', 2282], ['ROCHA', 3048], ['RONALDO BENEDET', 2354], ['VICENTINHO JÚNIOR', 3059]]
+        expected_name = [["VICENTINHO JÚNIOR", 3059]]
 
         r.get(url, json=mock_json_jarbas_search())
 
-        names = req.find_names('fulano')
+        names = req.find_names('VICENTINHO')
 
         self.assertEqual(names, expected_name)
 
