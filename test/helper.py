@@ -115,7 +115,7 @@ def mock_json_jarbas_search():
                     "suspicions": "null",
                     "receipt_text": "null",
                     "search_vector": "'75543611000185':6A 'aer':4A 'aircraft':9,14 'chart':12 'giacob':1A 'helisul':2A 'ltda':5A 'of':13 'or':11 'pr':7A,8B 'renting':10 'tax':3A"
-                },
+                    },
             {
                     "all_net_values": [
                         6990.0
@@ -164,7 +164,7 @@ def mock_json_jarbas_search():
                     "suspicions": "null",
                     "receipt_text": "null",
                     "search_vector": "'21138576000190':4A 'ac':6B 'activity':10 'ltda':3A 'mobobits':2A 'of':8 'parliamentary':9 'psdb':5A 'publicity':7 'roch':1A"
-                },
+                    },
             {
                     "all_net_values": [
                         5780.0
@@ -213,7 +213,7 @@ def mock_json_jarbas_search():
                     "suspicions": "null",
                     "receipt_text": "null",
                     "search_vector": "'14082069000116':8A 'and':12 'automotor':15 'chapadinh':2A 'combustiv':6A 'comerci':4A 'francisc':1A 'fuels':11 'ltda':7A 'lubricants':13 'pa':10B 'petrosan':3A 'pod':9A 'veícul':14"
-                },
+                    },
             {
                     "all_net_values": [
                         3000.0
@@ -262,7 +262,7 @@ def mock_json_jarbas_search():
                     "suspicions": "null",
                     "receipt_text": "null",
                     "search_vector": "'03514281000199':8A 'automotiv':11 'barret':5A 'benedet':2A 'c':4A 'chart':15 'eirel':7A 'or':14 'pmdb':9A 'renting':13 'ronald':1A 'sc':10B 'turism':6A 'vehicl':12"
-                },
+                    },
             {
                     "all_net_values": [
                         130.0
@@ -311,7 +311,7 @@ def mock_json_jarbas_search():
                     "suspicions": "null",
                     "receipt_text": "null",
                     "search_vector": "'72629140000134':7A 'congressperson':13 'distrit':15 'except':11 'federal':16 'from':14 'hotel':4A 'lodging':10 'lucen':3A 'nacional':5A 'pv':8A 'robert':1A 's/a':6A 'sp':9B"
-                },
+                    },
             {
                     "all_net_values": [
                         200.0
@@ -360,7 +360,7 @@ def mock_json_jarbas_search():
                     "suspicions": "null",
                     "receipt_text": "null",
                     "search_vector": "'08657922000188':8A 'activity':14 'cels':1A 'empres':3A 'expressã':6A 'jornal':5A 'jornalíst':4A 'ltda':7A 'maldan':2A 'of':12 'parliamentary':13 'pmdb':9A 'publicity':11 'sc':10B"
-                }
+                    }
         ]
     }
 
@@ -472,7 +472,7 @@ def mock_json_jarbas_suspicions():
                     },
                     "receipt_text": "null",
                     "search_vector": "'aprendizag':6A 'colatt':2A 'comercial':7A 'congressperson':11 'meal':12 'nacional':4A 'pmdb':9A 'sc':10B 'senac':8A 'servic':3A 'vald':1A"
-            },
+                },
             {
                     "all_net_values": [
                         671.85
@@ -523,7 +523,7 @@ def mock_json_jarbas_suspicions():
                     },
                     "receipt_text": "null",
                     "search_vector": "'03953506000103':9A 'belin':4A 'congressperson':10 'gastronom':7A 'lideranc':1A 'ltda':8A 'meal':11 'paes':5A 'psdb':3A"
-            },
+                },
             {
                     "all_net_values": [
                         600.0
@@ -574,7 +574,7 @@ def mock_json_jarbas_suspicions():
                     },
                     "receipt_text": "null",
                     "search_vector": "'33447301000117':7A 'aliment':5A 'comerci':3A 'congressperson':8 'ltda':6A 'meal':9 'phs':1A 'taiob':2A"
-            },
+                },
             {
                     "all_net_values": [
                         1600.0
@@ -625,7 +625,7 @@ def mock_json_jarbas_suspicions():
                     },
                     "receipt_text": "null",
                     "search_vector": "'26171763000199':10A 'buffet':5A 'congressperson':11 'gourmet':7A 'lim':4A 'ltda':9A 'ltda-m':8A 'maison':6A 'meal':12 'sdd':1A 'vasconcel':2A"
-            },
+                },
             {
                     "all_net_values": [
                         538.72
@@ -676,7 +676,7 @@ def mock_json_jarbas_suspicions():
                     },
                     "receipt_text": "null",
                     "search_vector": "'03346671000954':8A 'cd':2A 'congressperson':9 'epp':7A 'lid.gov':1A 'ltda':6A 'meal':10 'self':4A 'servic':5A 'taiob':3A"
-            },
+                },
             {
                     "all_net_values": [
                         2880.0
@@ -727,7 +727,7 @@ def mock_json_jarbas_suspicions():
                     },
                     "receipt_text": "null",
                     "search_vector": "'18440959168':7A '27570249000199':8A 'antoni':4A 'borg':6A 'congressperson':9 'girott':5A 'lideranc':1A 'meal':10 'pt':3A"
-            }
+                }
         ]
     }
 
@@ -738,7 +738,3 @@ def mock_request_search():
     adapter = requests_mock.Adapter()
     adapter.register_uri('GET', url, json=mock_json_jarbas_search())
     session.mount('mock', adapter)
-
-
-def mock_request_suspicions():
-    pass

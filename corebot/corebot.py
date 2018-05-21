@@ -34,8 +34,8 @@ class CoreBot:
             "/seguir": self._command_follow,
             "/deixardeseguir": self._command_unfollow,
             "/start": self._command_start,
-            "/historico": self._command_history
-        }
+            "/historico": self._command_history,
+            "/proximos": self._command_proximos}
 
         return command_list[command[0]](user_id, command)
 
@@ -63,7 +63,9 @@ class CoreBot:
         return self.messenger.names_list(command[1], itens)
 
     def _command_history(self, user_id, command):
-        itens = self.requester.find_suspicions(command[1][0])
-        name = self.db.get_congressperson_name(command[1][0])
-        see_more_command = ""
-        return self.messenger.history_message(itens, see_more_command)
+        itens, next_offset = self.requester.find_suspicions(command[1][0])
+        return self.messenger.history_message(itens, command[1][0], next_offset)
+
+    def _command_proximos(self, user_id, command):
+        itens, next_offset = self.requester.find_suspicions(command[1][0], command[1][1])
+        return self.messenger.history_message(itens, command[1][0], next_offset)
