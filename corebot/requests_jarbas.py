@@ -4,6 +4,7 @@ import itertools
 import logging
 
 from urllib.parse import quote
+from urllib.parse import parse_qs
 
 from corebot.db import MongoCore
 
@@ -31,11 +32,12 @@ class Requester:
             self.mongo.add_congressperson_to_list(x[0], x[1])
         return names
 
-    def find_suspicions(self, id):
+    def find_suspicions(self, applicant_id, offset=""):
 
-        url = '%s?suspicions=1&applicant_id=%s' % (self.HOST, id)
-
+        url = '%s?suspicions=1&applicant_id=%s&limit=7&offset=%s' % (self.HOST, applicant_id, offset)
+        print(url)
         response = requests.get(url)
-        b = [x for x in response.json()['results']]
+        suspicions_list = [x for x in response.json()['results']]
+        next_offset = parse_qs(response.json()["next"]).get("offset", [""])[0]
 
-        return b
+        return suspicions_list, next_offset

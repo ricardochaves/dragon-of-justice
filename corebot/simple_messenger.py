@@ -50,8 +50,11 @@ class SimpleHtmlMessenger:
 
         return [msg]
 
-    def history_message(self, itens, next_command):
+    def history_message(self, itens, applicant_id, next_offset):
         msg = self.build_msg_suspicions(itens)
+
+        if len(itens) == 7:
+            msg.append("Para ver mais click em /proximos_%s_%s" % (applicant_id, next_offset))
 
         return msg
 
