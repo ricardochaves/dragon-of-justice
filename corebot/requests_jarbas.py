@@ -5,7 +5,6 @@ import logging
 
 from urllib.parse import quote
 from urllib.parse import parse_qs
-from urllib.parse import urlparse
 
 from corebot.db import MongoCore
 
