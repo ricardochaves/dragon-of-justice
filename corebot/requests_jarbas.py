@@ -32,9 +32,9 @@ class Requester:
             self.mongo.add_congressperson_to_list(x[0], x[1])
         return names
 
-    def find_suspicions(self, id, offset=""):
+    def find_suspicions(self, applicant_id, offset=""):
 
-        url = '%s?suspicions=1&applicant_id=%s&limit=7&offset=%s' % (self.HOST, id, offset)
+        url = '%s?suspicions=1&applicant_id=%s&limit=7&offset=%s' % (self.HOST, applicant_id, offset)
         print(url)
         response = requests.get(url)
         suspicions_list = [x for x in response.json()['results']]
