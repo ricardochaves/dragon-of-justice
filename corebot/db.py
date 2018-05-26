@@ -48,7 +48,8 @@ class MongoCore:
         logging.info('get_politico_name: id: %s', id)
         return self.get_congressperson(int(id))['name']
 
-    def _build_user_key(self, user_id):
+    @staticmethod
+    def _build_user_key(user_id):
         return {
             "user_id": user_id
         }

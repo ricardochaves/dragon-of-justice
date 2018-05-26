@@ -111,5 +111,6 @@ class SimpleHtmlMessenger:
 
         return suspicions_dict.get(list(data)[0], data)
 
-    def _build_list_name_string(self, msg, names_list):
+    @staticmethod
+    def _build_list_name_string(msg, names_list):
         return '\n\n'.join([msg % (x[0], x[1], x[1]) for x in names_list])
