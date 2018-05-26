@@ -1,5 +1,3 @@
-import logging
-import sys
 
 
 class SimpleHtmlMessenger:
@@ -23,10 +21,11 @@ class SimpleHtmlMessenger:
         return [msg]
 
     def user_user_following(self, itens):
-        logging.info('itens %s' % itens)
-        list_ = '\n\n'.join(["<strong>%s</strong>.\n -- Para ver o históricos: /historico_%s\n -- Para parar de "
-                             "seguir /deixardeseguir_%s" % (x[0], x[1], x[1]) for x in itens])
-        msg = 'Você está seguindo os seguintes políticos: \n%s' % list_
+
+        text = "<strong>%s</strong>.\n -- Para ver o históricos: /historico_%s\n -- Para parar de seguir" \
+            " /deixardeseguir_%s"
+
+        msg = 'Você está seguindo os seguintes políticos: \n%s' % self._build_list_name_string(text, itens)
 
         return [msg]
 
@@ -42,11 +41,11 @@ class SimpleHtmlMessenger:
         return [msg]
 
     def names_list(self, name, itens):
-        list_ = '\n\n'.join(['<strong>%s</strong>.\n -- Para seguir use /seguir_%s\n -- Para fiscalizar use /historico_%s' %
-                             (x[0], x[1], x[1]) for x in itens])
+
+        text = "<strong>%s</strong>.\n -- Para seguir use /seguir_%s\n -- Para fiscalizar use /historico_%s"
 
         msg = "A pesquisa pelo nome <strong>%s</strong> gerou os seguintes resultados: \n %s" % (
-            name, list_)
+            name, self._build_list_name_string(text, itens))
 
         return [msg]
 
@@ -101,22 +100,16 @@ class SimpleHtmlMessenger:
         return msg
 
     def build_suspicions(self, data):
-        if 'irregular_companies_classifier' in data.keys():
-            return 'CNPJ irregular'
+        suspicions_dict = {
+            "irregular_companies_classifier": "CNPJ irregular",
+            "meal_price_outlier": "Preço de refeição muito incomum",
+            "election_expenses_classifier": data,
+            "meal_price_outlier_classifier": "Valor suspeito de refeição",
+            "over_monthly_subquota_limit": "Extrapolou o limite da (sub)quota",
+            "traveled_speeds_classifier": "Viagens muito rápidas"
+        }
 
-        if "meal_price_outlier" in data.keys():
-            return 'Preço de refeição muito incomum'
+        return suspicions_dict.get(list(data)[0], data)
 
-        elif 'election_expenses_classifier' in data.keys():
-            return data
-
-        elif 'meal_price_outlier_classifier' in data.keys():
-            return 'Valor suspeito de refeição'
-
-        elif 'over_monthly_subquota_limit' in data.keys():
-            return 'Extrapolou o limite da (sub)quota'
-
-        elif 'traveled_speeds_classifier' in data.keys():
-            return 'Viagens muito rápidas'
-
-        return data
+    def _build_list_name_string(self, msg, names_list):
+        return '\n\n'.join([msg % (x[0], x[1], x[1]) for x in names_list])

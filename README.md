@@ -11,33 +11,38 @@ O objetivo do projeto é dar poder a qualquer pessoa / organização de criar o 
 ## Para desenvolver
 
 Faça um clone do projeto
+
 ```
 git clone git@github.com:ricardochaves/dragon-of-justice.git
 ```
 
-Entre na pasta 
+Entre na pasta
+
 ```
 cd dragon-of-justice
 ```
 
 Crie um arquivo ```.env``` baseado no ```example.env```
+
 ```
 cp example.env .env
 ```
 
 ### Crie um bot no telegram
+
 Atualmente o bot só tem suporte para o telegram, mas ele está sendo desenvolvido com a ideia de se plugar mais bots ao bot core.
 
 Você precisa criar um bot no Telegram e adicionar o token no seu arquivo ```.env```. Para criar um token você pode ver a [documentação oficial do Telegran](https://core.telegram.org/bots#3-how-do-i-create-a-bot).
 
 ### MongoDB
+
 Se você quiser manter os dados persistidos no banco de dados crie um diretório ```./data/db``` e adicione o volume no ```docker-compose.yml```. Ele vai ficar parecido com o exemplo abaixo.
 
 ```
 services:
   mongodb:
     image: mongo:3.6.0
-    ports: 
+    ports:
       - "27017:27017"
     volumes:
       - ./data/db:/data/db

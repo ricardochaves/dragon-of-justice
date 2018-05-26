@@ -14,47 +14,22 @@ class MongoCore:
         self.congressperson_collection = self.db['congressperson']
 
     def insert_user(self, user_id):
-        key = {
-            "user_id": user_id
-        }
         data = {
             "user_id": user_id,
             "following": []
         }
-        return self.user_list_collection.update(key, data, upsert=True)
+        return self.user_list_collection.update(self._build_user_key(user_id), data, upsert=True)
 
     def get_user_following(self, user_id):
-        return self.user_list_collection.find_one({
-            "user_id": user_id
-        })['following']
+        return self.user_list_collection.find_one(self._build_user_key(user_id))['following']
 
     def add_congressperson_to_follow(self, user_id, congressperson_id):
-        key = {
-            "user_id": user_id
-        }
-        value = {
-            "$addToSet": {
-                "following": {
-                    "id": congressperson_id
-                }
-            }
-        }
-        self.user_list_collection.find_one_and_update(key, value)
-        return self.get_congressperson_name(congressperson_id)
+
+        return self._execute_update("$addToSet", user_id, congressperson_id)
 
     def remove_congressperson_to_follow(self, user_id, congressperson_id):
-        key = {
-            "user_id": user_id
-        }
-        value = {
-            "$pull": {
-                "following": {
-                    "id": congressperson_id
-                }
-            }
-        }
-        self.user_list_collection.find_one_and_update(key, value)
-        return self.get_congressperson_name(congressperson_id)
+
+        return self._execute_update("$pull", user_id, congressperson_id)
 
     def add_congressperson_to_list(self, name, application_id):
         key = {
@@ -72,3 +47,21 @@ class MongoCore:
     def get_congressperson_name(self, id):
         logging.info('get_politico_name: id: %s', id)
         return self.get_congressperson(int(id))['name']
+
+    def _build_user_key(self, user_id):
+        return {
+            "user_id": user_id
+        }
+
+    def _execute_update(self, command, user_id, congressperson_id):
+
+        value = {
+            command: {
+                "following": {
+                    "id": congressperson_id
+                }
+            }
+        }
+
+        self.user_list_collection.find_one_and_update(self._build_user_key(user_id), value)
+        return self.get_congressperson_name(congressperson_id)
