@@ -63,3 +63,41 @@ Se você gosta de ver os testes durante o desenvolvimento use o watch
 ```
 docker-compose run bot nosetests --with-watch
 ```
+
+Existe a opção de usar com converage
+
+```
+docker-compose run bot nosetests --with-watch --with-coverage --cover-package=.
+```
+
+### Code Climate
+
+Para evitar que o PR tenha problemas com o Code Climate você pode rodar ele localmente primeiro.
+Primeiro instale o CLI. Veja como instalar [aqui](https://github.com/codeclimate/codeclimate#packages)
+
+Após a instalação baixe as imagens do docker dos plugins, no diretório root faça:
+
+```
+codeclimate engines:install
+```
+
+Isso pode demorar...
+
+Depois que ele baixar as imagens execute:
+
+```
+codeclimate analyze
+```
+
+O resultado esperado é:
+
+```
+>>codeclimate analyze
+Starting analysis
+Running structure: Done!
+Running duplication: Done!
+Running pep8: Done!
+Running markdownlint: Done!
+
+Analysis complete! Found 0 issues.
+```
