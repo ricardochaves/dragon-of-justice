@@ -10,11 +10,11 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 class CoreBot:
 
-    def __init__(self, messenger=None, db=None, requester=None):
+    def __init__(self, messenger=SimpleHtmlMessenger(), db=MongoCore(), requester=Requester()):
 
-        self.messenger = messenger if messenger else SimpleHtmlMessenger()
-        self.db = db if db else MongoCore()
-        self.requester = requester if requester else Requester()
+        self.messenger = messenger
+        self.db = db
+        self.requester = requester
 
     def execute_command(self, command, user_id):
         args = self._translate_command(command)
