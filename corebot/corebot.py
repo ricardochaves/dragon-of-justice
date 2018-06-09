@@ -1,15 +1,14 @@
-from corebot.simple_messenger import SimpleHtmlMessenger
-from corebot.db import MongoCore
-from corebot.requests_jarbas import Requester
-import logging
-
 import logging
 import sys
+
+from corebot.db import MongoCore
+from corebot.requests_jarbas import Requester
+from corebot.simple_messenger import SimpleHtmlMessenger
+
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
 
 class CoreBot:
-
     def __init__(self, messenger=SimpleHtmlMessenger(), db=MongoCore(), requester=Requester()):
 
         self.messenger = messenger
@@ -22,7 +21,7 @@ class CoreBot:
 
     def _translate_command(self, command):
         if command[:5] == "/nome":
-            return [command[:5], " ".join(command.split(' ')[1:])]
+            return [command[:5], " ".join(command.split(" ")[1:])]
         else:
             return [command.split("_")[0], command.split("_")[1:]]
 
@@ -35,7 +34,8 @@ class CoreBot:
             "/deixardeseguir": self._command_unfollow,
             "/start": self._command_start,
             "/historico": self._command_history,
-            "/proximos": self._command_proximos}
+            "/proximos": self._command_proximos,
+        }
 
         return command_list[command[0]](user_id, command)
 
@@ -47,7 +47,7 @@ class CoreBot:
         return self.messenger.help_message()
 
     def _command_list(self, user_id, command):
-        itens = [[self.db.get_congressperson_name(x['id']), x['id']] for x in self.db.get_user_following(user_id)]
+        itens = [[self.db.get_congressperson_name(x["id"]), x["id"]] for x in self.db.get_user_following(user_id)]
         return self.messenger.user_user_following(itens)
 
     def _command_follow(self, user_id, command):

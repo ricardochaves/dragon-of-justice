@@ -1,7 +1,4 @@
-
-
 class SimpleHtmlMessenger:
-
     def start_message(self):
         msg = (
             "Bem vindo ao Controle Público, aqui você pode verificar as atividades suspeitas "
@@ -22,10 +19,9 @@ class SimpleHtmlMessenger:
 
     def user_user_following(self, itens):
 
-        text = "<strong>%s</strong>.\n -- Para ver o históricos: /historico_%s\n -- Para parar de seguir" \
-            " /deixardeseguir_%s"
+        text = "<strong>%s</strong>.\n -- Para ver o históricos: /historico_%s\n -- Para parar de seguir" " /deixardeseguir_%s"
 
-        msg = 'Você está seguindo os seguintes políticos: \n%s' % self._build_list_name_string(text, itens)
+        msg = "Você está seguindo os seguintes políticos: \n%s" % self._build_list_name_string(text, itens)
 
         return [msg]
 
@@ -45,7 +41,9 @@ class SimpleHtmlMessenger:
         text = "<strong>%s</strong>.\n -- Para seguir use /seguir_%s\n -- Para fiscalizar use /historico_%s"
 
         msg = "A pesquisa pelo nome <strong>%s</strong> gerou os seguintes resultados: \n %s" % (
-            name, self._build_list_name_string(text, itens))
+            name,
+            self._build_list_name_string(text, itens),
+        )
 
         return [msg]
 
@@ -59,30 +57,30 @@ class SimpleHtmlMessenger:
 
     def create_item_message(self, data):
 
-        item = ("<strong>Ano:</strong> %s\n"
-                "<strong>Quota:</strong> %s\n"
-                "<strong>Grupo Quota:</strong> %s\n"
-                "<strong>Fornecedor:</strong> %s\n"
-                "<strong>CNPJ Fornecedo:</strong> %s\n"
-                "<strong>Data:</strong> %s\n"
-                "<strong>Documento Id:</strong> %s\n"
-                "<strong>Valor:</strong> %s\n"
-                "<strong>MOTIVO:</strong> %s\n"
-                "<a href='%s'>MAIS INFORMAÇÕES DO JARBAS CLIQUE AQUI</a>\n"
-                "<strong>Link Nota Fiscal:</strong> %s\n" % (
-                    data['year'],
-                    data['subquota_description'],
-                    data['subquota_group_description'],
-                    data['supplier'],
-                    data['cnpj_cpf'],
-                    data['issue_date'],
-                    data['document_id'],
-                    data['document_value'],
-                    self.build_suspicions(data['suspicions']),
-                    'https://jarbas.serenata.ai/layers/#/documentId/%s' % data['document_id'],
-                    data['receipt']['url'] if data['receipt']['url'] else 'Não cadastrado'
-                )
-                )
+        item = (
+            "<strong>Ano:</strong> %s\n<strong>Quota:</strong> %s\n"
+            "<strong>Grupo Quota:</strong> %s\n<strong>Fornecedor:</strong> %s\n"
+            "<strong>CNPJ Fornecedo:</strong> %s\n"
+            "<strong>Data:</strong> %s\n"
+            "<strong>Documento Id:</strong> %s\n"
+            "<strong>Valor:</strong> %s\n"
+            "<strong>MOTIVO:</strong> %s\n"
+            "<a href='%s'>MAIS INFORMAÇÕES DO JARBAS CLIQUE AQUI</a>\n"
+            "<strong>Link Nota Fiscal:</strong> %s\n"
+            % (
+                data["year"],
+                data["subquota_description"],
+                data["subquota_group_description"],
+                data["supplier"],
+                data["cnpj_cpf"],
+                data["issue_date"],
+                data["document_id"],
+                data["document_value"],
+                self.build_suspicions(data["suspicions"]),
+                "https://jarbas.serenata.ai/layers/#/documentId/%s" % data["document_id"],
+                data["receipt"]["url"] if data["receipt"]["url"] else "Não cadastrado",
+            )
+        )
 
         return item
 
@@ -90,10 +88,12 @@ class SimpleHtmlMessenger:
         itens = [self.create_item_message(x) for x in lista]
 
         if len(lista) > 0:
-            core_texto = 'Abaixo dessa mensagem você vai receber uma mensagem para cada ocorrencia do %s' % lista[
-                0]["congressperson_name"]
+            core_texto = (
+                "Abaixo dessa mensagem você vai receber uma mensagem para cada ocorrencia do %s"
+                % lista[0]["congressperson_name"]
+            )
         else:
-            core_texto = 'Não foi encontrada nenhuma ocorrencia para o político'
+            core_texto = "Não foi encontrada nenhuma ocorrencia para o político"
 
         msg = [core_texto] + itens
 
@@ -106,11 +106,11 @@ class SimpleHtmlMessenger:
             "election_expenses_classifier": data,
             "meal_price_outlier_classifier": "Valor suspeito de refeição",
             "over_monthly_subquota_limit": "Extrapolou o limite da (sub)quota",
-            "traveled_speeds_classifier": "Viagens muito rápidas"
+            "traveled_speeds_classifier": "Viagens muito rápidas",
         }
 
         return suspicions_dict.get(list(data)[0], data)
 
     @staticmethod
     def _build_list_name_string(msg, names_list):
-        return '\n\n'.join([msg % (x[0], x[1], x[1]) for x in names_list])
+        return "\n\n".join([msg % (x[0], x[1], x[1]) for x in names_list])

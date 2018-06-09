@@ -1,15 +1,15 @@
 import sys
-sys.path.append("..")
-
-import os
 import unittest
-from unittest import mock
-from corebot.db import MongoCore
+from datetime import datetime
 from test.helper import cleardb
+
+from corebot.db import MongoCore
+from freezegun import freeze_time
+
+sys.path.append("..")
 
 
 class TestDb(unittest.TestCase):
-
     def setUp(self):
         cleardb()
 
@@ -28,14 +28,12 @@ class TestDb(unittest.TestCase):
 
         mongo = MongoCore()
         inserted = mongo.insert_user(123)
-        recupered = mongo.user_list_collection.find({
-            "user_id": 123
-        })
+        recupered = mongo.user_list_collection.find({"user_id": 123})
 
         self.assertIsInstance(inserted, dict)
         self.assertIsNotNone(recupered)
         self.assertEqual(recupered.count(), 1)
-        self.assertEqual(recupered[0]['following'], [])
+        self.assertEqual(recupered[0]["following"], [])
 
     def test_get_user_following(self):
         """
@@ -43,8 +41,8 @@ class TestDb(unittest.TestCase):
         """
 
         mongo = MongoCore()
-        mongo.add_congressperson_to_list('fulano', 456)
-        mongo.add_congressperson_to_list('fulano2', 789)
+        mongo.add_congressperson_to_list("fulano", 456)
+        mongo.add_congressperson_to_list("fulano2", 789)
 
         mongo.insert_user(123)
         name_1 = mongo.add_congressperson_to_follow(123, 456)
@@ -55,8 +53,8 @@ class TestDb(unittest.TestCase):
         self.assertIsNotNone(following)
         self.assertIsInstance(following, list)
         self.assertEqual(len(following), 2)
-        self.assertEqual(name_1, 'fulano')
-        self.assertEqual(name_2, 'fulano2')
+        self.assertEqual(name_1, "fulano")
+        self.assertEqual(name_2, "fulano2")
 
     def test_remove_congressperson_to_follow(self):
         """
@@ -64,8 +62,8 @@ class TestDb(unittest.TestCase):
         """
 
         mongo = MongoCore()
-        mongo.add_congressperson_to_list('fulano', 456)
-        mongo.add_congressperson_to_list('fulano2', 789)
+        mongo.add_congressperson_to_list("fulano", 456)
+        mongo.add_congressperson_to_list("fulano2", 789)
 
         mongo.insert_user(123)
         name_1 = mongo.add_congressperson_to_follow(123, 456)
@@ -78,9 +76,9 @@ class TestDb(unittest.TestCase):
         self.assertIsNotNone(following)
         self.assertIsInstance(following, list)
         self.assertEqual(len(following), 1)
-        self.assertEqual(name_1, 'fulano')
-        self.assertEqual(name_2, 'fulano2')
-        self.assertEqual(name_3, 'fulano')
+        self.assertEqual(name_1, "fulano")
+        self.assertEqual(name_2, "fulano2")
+        self.assertEqual(name_3, "fulano")
 
     def test_add_congressperson_to_list(self):
         """
@@ -89,7 +87,7 @@ class TestDb(unittest.TestCase):
 
         mongo = MongoCore()
 
-        inserted = mongo.add_congressperson_to_list('fulano', 123)
+        inserted = mongo.add_congressperson_to_list("fulano", 123)
 
         recupered = mongo.congressperson_collection.find({"application_id": 123})
 
@@ -99,14 +97,75 @@ class TestDb(unittest.TestCase):
 
     def test_get_congressperson_name(self):
         """
-            Test: Integration: DB: get_congressperson_name: Should return the name 
+            Test: Integration: DB: get_congressperson_name: Should return the name
         """
         mongo = MongoCore()
 
-        inserted = mongo.add_congressperson_to_list('fulano', 123)
+        inserted = mongo.add_congressperson_to_list("fulano", 123)
 
         recupered = mongo.get_congressperson_name(123)
 
         self.assertIsInstance(inserted, dict)
         self.assertIsNotNone(recupered)
-        self.assertEqual(recupered, 'fulano')
+        self.assertEqual(recupered, "fulano")
+
+    @freeze_time("2018-06-21 01:11:56")
+    def test_get_last_execution_first_time(self):
+        """
+            Test: Integration: DB: get_last_execution: Should insert datetime.now
+        """
+        mongo = MongoCore()
+
+        last_execution = mongo.get_last_execution()
+        result = mongo.worker_collection.find_one({"id": "1"})
+
+        self.assertEqual(last_execution, datetime.now())
+        self.assertEqual(result["data"], datetime.now())
+
+    def test_get_last_execution_get_previews_inserted(self):
+        """
+            Test: Integration: DB: get_last_execution: Should get previews inserted datetime.now
+        """
+
+        mongo = MongoCore()
+
+        with freeze_time("2019-01-04 01:11:56"):
+            data = datetime.now()
+            mongo.update_last_execution(data)
+
+        last_execution = mongo.get_last_execution()
+
+        self.assertEqual(last_execution, data)
+        self.assertNotEquals(data, datetime.now())
+
+    @freeze_time("2018-06-21 01:11:56")
+    def test_update_last_execution(self):
+        """
+            Test: Integration: DB: update_last_execution: Should insert datetime.now
+        """
+        mongo = MongoCore()
+
+        data = datetime.now()
+        mongo.update_last_execution(data)
+
+        result = mongo.worker_collection.find_one({"id": "1"})
+
+        self.assertEqual(result["data"], data)
+
+    @freeze_time("2018-06-21 01:11:56")
+    def test_update_last_execution_previews_inserted(self):
+        """
+            Test: Integration: DB: update_last_execution: Should update previews inserted
+        """
+        mongo = MongoCore()
+
+        data = datetime.now()
+        mongo.update_last_execution(data)
+
+        with freeze_time("2019-01-04 01:11:56"):
+            data = datetime.now()
+            mongo.update_last_execution(data)
+
+        result = mongo.worker_collection.find_one({"id": "1"})
+
+        self.assertEqual(result["data"], data)
